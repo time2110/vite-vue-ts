@@ -3,6 +3,11 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import ViteRestart from 'vite-plugin-restart'
+import ElementPlus from 'unplugin-element-plus/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,7 +18,19 @@ export default defineConfig({
       restart: [
         'vite.config.ts',
       ]
-    })
+    }),
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    ElementPlus({
+      // 配置选项
+      importStyle: 'sass', // 设置导入样式，默认是 'css'
+      useSource: true, // 设置是否使用源代码，默认是 false
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
+
   ],
   resolve: {
     // 配置别名

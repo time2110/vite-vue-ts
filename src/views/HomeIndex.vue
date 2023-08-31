@@ -7,6 +7,7 @@
 </template>
 
 <script setup lang="ts">
+import  { ElMessage } from 'element-plus'
 import { userStore } from '@/stores/index'
 import { login } from '@/http/api/user.ts'
 const user = userStore()
@@ -15,7 +16,10 @@ async function loginAsync() {
     email: '123',
     password: '12321'
   }
-  let data = await login(params)
+  const data = await login(params)
+  if(data.code!==201) {
+    ElMessage.warning(data.message)
+  }
   console.log(data)
 }
 loginAsync()
